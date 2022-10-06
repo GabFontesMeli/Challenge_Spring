@@ -3,13 +3,11 @@ package com.example.challenge_spring.service;
 import com.example.challenge_spring.dto.ProductDto;
 import com.example.challenge_spring.model.Product;
 import com.example.challenge_spring.repository.ProductRepo;
-import com.example.challenge_spring.util.ProductOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,15 +66,6 @@ public class ProductService implements IProduct {
         return products.stream()
                 .filter(product -> product.isFreeShipping() == freeShipping &&
                         product.getPrestige().equals(prestige))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Product> getAllByCategoryAndShippingOrdered(String category, boolean freeShipping, int order) {
-        List<Product> products = getAllByCategoryAndShipping(category, freeShipping);
-
-        return products.stream()
-                .sorted((p1, p2) -> ProductOrder.orderProducts(order, p1, p2))
                 .collect(Collectors.toList());
     }
 }
